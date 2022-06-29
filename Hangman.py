@@ -1,4 +1,4 @@
-from Hangman_ART import stages
+from Hangman_ART import stages, logo
 import random
 
 # load_word(FILE_NAME) accepts a file name as a parameter and loads all the words from the .txt file
@@ -38,7 +38,7 @@ def game_finish(remaining_lives, user_guess, chosen_word):
 
 # play_game(chosen_word) starts the hangman game.
 def play_game(chosen_word):
-    letters_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    lower_case_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     guessed_letters = []
     guessed_words = []
     chosen_word_list = list(chosen_word)
@@ -46,10 +46,15 @@ def play_game(chosen_word):
     display = '_' * len(chosen_word)
     display_list = list(display)
     while not game_finish(lives, display, chosen_word):
+        print(stages[lives])
+        for letter in display:
+            print(letter, end = ' ')
+        print()
+        print()
         print("Available letters: ", end=' ')
-        for letter in letters_list:
+        for letter in lower_case_alphabet:
             if not letter in guessed_letters:
-                print(letter, end='')
+                print(letter, end=' ')
         print()
         guess = input("Guess a letter/word: ")
         while not guess.isalpha() or guess.lower() in guessed_letters or guess.lower() in guessed_words:
@@ -76,11 +81,13 @@ def play_game(chosen_word):
                 lives -= 1
             else:
                 display = chosen_word
-        print(stages[lives])
-        for letter in display:
-            print(letter, end = ' ')
         print()
         print()
+    print(stages[lives])
+    for letter in display:
+        print(letter, end = ' ')
+    print()
+    print()
     if lives > 0:
         print("Congratulations! You won!")
     else:
@@ -88,7 +95,8 @@ def play_game(chosen_word):
 
 
 # This is the main function
-def main():       
+def main():    
+    print(logo)   
     play_again = 'Y'
     used_words = []
     while play_again.upper() == 'Y':
